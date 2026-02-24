@@ -1,0 +1,272 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Content Colors */
+  --color-content-primary: #1a1814; /* ink */
+  --color-content-secondary: #6c6a60; /* muted ink */
+  --color-content-tertiary: #8a877c; /* softer */
+  --color-content-brand: #5c6a43; /* olive */
+
+  /* Background Colors */
+  --color-background-primary: #fcfbf8; /* creme */
+  --color-background-secondary: #ffffff;
+  --color-background-tertiary: #f5f2e8; /* creme 2 */
+  --color-background-brand: #5c6a43; /* olive */
+  --color-background-highlights: #e9e3d2; /* highlight creme */
+
+  /* Border Colors */
+  --color-border-primary: #ded9c9;
+  --color-border-secondary: #c9c3b3;
+  --color-border-brand: #7a8a56; /* olive light */
+  --color-border-divisor: #e7e2d4;
+
+  /* Accent Colors */
+  --color-accent-primary: #5c6a43; /* olive */
+  --color-accent-primary-light: #7a8a56; /* olive light */
+  --color-accent-cream: #f5f2e8;
+  --color-accent-cream-strong: #e9e3d2;
+
+  /* Typography (usa suas fonts do Next se quiser) */
+  --font-family-title: var(--font-geist-sans), ui-sans-serif, system-ui;
+  --font-family-body: var(--font-geist-sans), ui-sans-serif, system-ui;
+
+  /* Title Typography */
+  --text-title-size: 26px;
+  --text-title-line-height: 34px;
+  --text-title-weight: 700;
+
+  /* Body Typography */
+  --text-paragraph-medium-size: 15px;
+  --text-paragraph-medium-line-height: 26px;
+  --text-paragraph-medium-weight: 500;
+
+  --text-paragraph-small-size: 13px;
+  --text-paragraph-small-line-height: 18px;
+  --text-paragraph-small-weight: 500;
+
+  --text-label-large-size: 16px;
+  --text-label-large-line-height: 24px;
+  --text-label-large-weight: 700;
+
+  --text-label-medium-size: 14px;
+  --text-label-medium-line-height: 22px;
+  --text-label-medium-weight: 700;
+
+  --text-label-small-size: 12px;
+  --text-label-small-line-height: 16px;
+  --text-label-small-weight: 700;
+
+  --text-link-size: 13px;
+  --text-link-line-height: 18px;
+  --text-link-weight: 600;
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* shadcn/ui tokens (mantendo a lógica do seu arquivo) */
+  --background: var(--color-background-primary);
+  --foreground: var(--color-content-primary);
+
+  --card: var(--color-background-secondary);
+  --card-foreground: var(--color-content-primary);
+
+  --popover: var(--color-background-secondary);
+  --popover-foreground: var(--color-content-primary);
+
+  --primary: var(--color-background-brand);
+  --primary-foreground: #ffffff;
+
+  --secondary: var(--color-background-tertiary);
+  --secondary-foreground: var(--color-content-primary);
+
+  --muted: var(--color-background-tertiary);
+  --muted-foreground: var(--color-content-secondary);
+
+  --accent: var(--color-accent-cream-strong);
+  --accent-foreground: var(--color-content-primary);
+
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+
+  --border: var(--color-border-primary);
+  --input: var(--color-border-primary);
+  --ring: var(--color-border-brand);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background-primary);
+    color: var(--color-content-primary);
+    font-family: var(--font-family-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-family-title);
+    font-weight: var(--text-title-weight);
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    font-size: var(--text-title-size);
+    line-height: var(--text-title-line-height);
+  }
+
+  a {
+    color: var(--color-content-brand);
+    text-underline-offset: 4px;
+  }
+}
+
+/* Typography Utility Classes */
+@layer utilities {
+  .text-title {
+    font-family: var(--font-family-title);
+    font-size: var(--text-title-size);
+    line-height: var(--text-title-line-height);
+    font-weight: var(--text-title-weight);
+  }
+
+  .text-paragraph-medium {
+    font-family: var(--font-family-body);
+    font-size: var(--text-paragraph-medium-size);
+    line-height: var(--text-paragraph-medium-line-height);
+    font-weight: var(--text-paragraph-medium-weight);
+  }
+
+  .text-paragraph-small {
+    font-family: var(--font-family-body);
+    font-size: var(--text-paragraph-small-size);
+    line-height: var(--text-paragraph-small-line-height);
+    font-weight: var(--text-paragraph-small-weight);
+  }
+
+  .text-label-large {
+    font-family: var(--font-family-body);
+    font-size: var(--text-label-large-size);
+    line-height: var(--text-label-large-line-height);
+    font-weight: var(--text-label-large-weight);
+  }
+
+  .text-label-medium {
+    font-family: var(--font-family-body);
+    font-size: var(--text-label-medium-size);
+    line-height: var(--text-label-medium-line-height);
+    font-weight: var(--text-label-medium-weight);
+  }
+
+  .text-label-small {
+    font-family: var(--font-family-body);
+    font-size: var(--text-label-small-size);
+    line-height: var(--text-label-small-line-height);
+    font-weight: var(--text-label-small-weight);
+  }
+
+  .text-link {
+    font-family: var(--font-family-body);
+    font-size: var(--text-link-size);
+    line-height: var(--text-link-line-height);
+    font-weight: var(--text-link-weight);
+  }
+
+  /* Color Utilities */
+  .text-content-primary {
+    color: var(--color-content-primary);
+  }
+  .text-content-secondary {
+    color: var(--color-content-secondary);
+  }
+  .text-content-tertiary {
+    color: var(--color-content-tertiary);
+  }
+  .text-content-brand {
+    color: var(--color-content-brand);
+  }
+
+  .bg-background-primary {
+    background-color: var(--color-background-primary);
+  }
+  .bg-background-secondary {
+    background-color: var(--color-background-secondary);
+  }
+  .bg-background-tertiary {
+    background-color: var(--color-background-tertiary);
+  }
+  .bg-background-brand {
+    background-color: var(--color-background-brand);
+  }
+  .bg-background-highlights {
+    background-color: var(--color-background-highlights);
+  }
+
+  .border-border-primary {
+    border-color: var(--color-border-primary);
+  }
+  .border-border-secondary {
+    border-color: var(--color-border-secondary);
+  }
+  .border-border-brand {
+    border-color: var(--color-border-brand);
+  }
+  .border-border-divisor {
+    border-color: var(--color-border-divisor);
+  }
+
+  /* Component-like helpers */
+  .card-surface {
+    background-color: var(--color-background-secondary);
+    border: 1px solid var(--color-border-primary);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 2px rgba(26, 24, 20, 0.06);
+  }
+
+  .btn-olive {
+    background-color: var(--color-background-brand);
+    color: #ffffff;
+    border-radius: calc(var(--radius) - 2px);
+    padding: 10px 14px;
+    font-weight: 600;
+  }
+
+  .btn-olive:hover {
+    filter: brightness(0.96);
+  }
+
+  .input-cream {
+    background-color: #ffffff;
+    border: 1px solid var(--color-border-primary);
+    border-radius: calc(var(--radius) - 2px);
+    padding: 10px 12px;
+    outline: none;
+  }
+
+  .input-cream:focus {
+    box-shadow: 0 0 0 3px rgba(122, 138, 86, 0.25);
+    border-color: var(--color-border-brand);
+  }
+}
+
+/* Toast Error Styles (mantive seu padrão) */
+[data-sonner-toast][data-type='error'] {
+  background-color: #dc2626 !important;
+  border-color: #b91c1c !important;
+  color: #ffffff !important;
+}
+
+[data-sonner-toast][data-type='error'] [data-title] {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+[data-sonner-toast][data-type='error'] [data-description] {
+  color: #ffffff !important;
+}
+
+[data-sonner-toast][data-type='error'] [data-icon] {
+  color: #ffffff !important;
+}
