@@ -14,19 +14,55 @@ import { MessageCircleHeartIcon, User } from 'lucide-react';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
+import { useEffect, useMemo, useState } from 'react';
+import { uploadWeddingPhoto } from '@/lib/upload-photo';
+import { toast } from 'sonner';
+import { PhotoPicker } from '../photo-picker/photo-picker';
 
 export const PostForm = () => {
+  const [file, setFile] = useState<File | null>(null);
+
+  const previewUrl = useMemo(
+    () => (file ? URL.createObjectURL(file) : null),
+    [file]
+  );
+
+  //cleanup do preview
+  useEffect(() => {
+    return () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
+
   const form = useForm<CreatePostInput>({
     resolver: zodResolver(createPostSchema),
     defaultValues: {
       name: '',
       message: '',
-      // imagePath: null,
+      imagePath: null,
     },
   });
 
-  const onSubmit = (data: CreatePostInput) => {
-    console.log(data);
+  const onSubmit = async (data: CreatePostInput) => {
+    try {
+      let imagePath: string | null = null;
+
+      if (file) {
+        const uploaded = await uploadWeddingPhoto(file);
+        imagePath = uploaded.publicUrl;
+      }
+
+      const payload: CreatePostInput = { ...data, imagePath };
+
+      //TODO: bater na api /api/posts para salvar no banco
+      console.log(payload);
+
+      toast.success('Foto Enviada e dados salvos');
+      form.reset();
+      setFile(null);
+    } catch (error: any) {
+      toast.error(error?.message || 'Erro ao enviar foto');
+    }
   };
 
   return (
@@ -35,6 +71,13 @@ export const PostForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-5"
       >
+        <PhotoPicker
+          previewUrl={previewUrl}
+          onPick={(file) => setFile(file)}
+          onClear={() => setFile(null)}
+          disabled={form.formState.isSubmitting}
+        />
+
         <FormField
           control={form.control}
           name={'name'}
@@ -83,7 +126,12 @@ export const PostForm = () => {
           )}
         />
 
-        <Button variant={'outline'} className="bg-accent-primary text-white">
+        <Button
+          variant={'outline'}
+          className="bg-accent-primary text-white"
+          type="submit"
+          disabled={form.formState.isSubmitting}
+        >
           Enviar
         </Button>
       </form>
