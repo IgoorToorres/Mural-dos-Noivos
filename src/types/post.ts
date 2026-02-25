@@ -1,7 +1,7 @@
 export type Post = {
   id: string;
   name: string;
-  messagem: string;
+  message: string;
   imagePath: string | null;
   createdAt: string;
 };
