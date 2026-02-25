@@ -54,8 +54,16 @@ export const PostForm = () => {
 
       const payload: CreatePostInput = { ...data, imagePath };
 
-      //TODO: bater na api /api/posts para salvar no banco
-      console.log(payload);
+      const res = await fetch('/api/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => null);
+        throw new Error(err?.message || 'Erro ao salvar no banco');
+      }
 
       toast.success('Foto Enviada e dados salvos');
       form.reset();
