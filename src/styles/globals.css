@@ -290,3 +290,26 @@
 [data-sonner-toast][data-type='error'] [data-icon] {
   color: #ffffff !important;
 }
+
+.photo-marquee {
+  animation: marquee 25s linear infinite;
+}
+.photo-marquee-reverse {
+  animation: marquee-reverse 30s linear infinite;
+}
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

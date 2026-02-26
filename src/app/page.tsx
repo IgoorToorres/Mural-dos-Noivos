@@ -14,58 +14,87 @@ export default async function Home() {
           alt="Foto de fundo"
           className="h-full w-full object-cover"
         />
+        <div className="absolute inset-0 bg-background/30" />
       </div>
 
-      {/* Content */}
-      <section className="relative z-10 flex h-full w-full flex-col items-center justify-center p-5">
-        <div className="grid w-full max-w-5xl grid-cols-1 gap-6 md:grid-cols-2">
-          {/* Couple Photo */}
-          <div className="flex h-100 w-full items-center justify-center rounded-3xl">
-            <div className="relative h-full w-full overflow-hidden rounded-2xl">
+      {/* Content - TV optimized */}
+      <section className="relative z-10 flex h-full w-full flex-col p-5">
+        {/* Top bar: Couple photo + QR Code */}
+        <div className="flex items-center justify-between px-4 pb-4">
+          <div className="flex items-center gap-5">
+            <div className="h-28 w-28 shrink-0 overflow-hidden rounded-2xl border-2 border-accent-cream/60 shadow-lg">
               <img
                 src={'/Natan-Bia.jpeg'}
                 alt="Foto do casal"
                 className="h-full w-full object-cover"
               />
             </div>
+            <div>
+              <h1 className="text-2xl font-bold text-foreground drop-shadow-sm">
+                Mural de Fotos
+              </h1>
+              <p className="text-sm text-content-secondary">
+                Envie sua foto e apareça aqui!
+              </p>
+            </div>
           </div>
 
-          {/* QR Code Section */}
-          <div className="flex h-100 w-full flex-col items-center justify-center gap-6 rounded-3xl bg-accent-cream-strong/10 p-8 ">
+          <div className="flex items-center gap-4 rounded-2xl bg-accent-cream/80 px-6 py-3 shadow-lg backdrop-blur-sm">
             <img
               src={'/download.png'}
               alt="QR Code"
-              className="h-58 w-58 rounded-xl object-cover shadow-md"
+              className="h-24 w-24 rounded-lg object-cover"
             />
-            <h1 className="text-center text-3xl font-bold text-foreground md:text-2xl">
-              Aponte sua câmera e mande sua mensagem ao casal
-            </h1>
+            <p className="max-w-45 text-center text-sm font-semibold leading-tight text-foreground">
+              Aponte sua câmera e mande sua foto ao casal
+            </p>
           </div>
         </div>
 
-        {/* Photo Carousel */}
-        <div className="mt-8 w-full max-w-full">
+        {/* Photo Grid - main focus */}
+        <div className="flex flex-1 flex-col justify-center gap-4 overflow-hidden pb-4">
           {photos.length === 0 ? (
             <div className="rounded-2xl border-2 border-dashed border-border-secondary bg-background-tertiary p-12 text-center text-base text-content-secondary">
               As primeiras fotos aparecerão aqui assim que forem enviadas.
             </div>
           ) : (
-            <div className="photo-marquee overflow-hidden rounded-3xl p-6">
-              <div className="photo-marquee-track gap-6">
-                {carouselItems.map((post, index) => (
-                  <div
-                    key={`${post.id}-${post.createdAt}-${index}`}
-                    className="h-72 w-72 shrink-0 overflow-hidden rounded-3xl transition-transform"
-                  >
-                    <img
-                      src={post.imagePath ?? ''}
-                      alt="Foto enviada ao mural"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                ))}
+            <>
+              {/* Row 1 - scrolls left */}
+              <div className="overflow-hidden rounded-3xl">
+                <div className="photo-marquee flex w-max gap-4">
+                  {carouselItems.map((post, index) => (
+                    <div
+                      key={`row1-${post.id}-${post.createdAt}-${index}`}
+                      className="h-[38vh] w-[38vh] shrink-0 overflow-hidden rounded-2xl shadow-lg"
+                    >
+                      <img
+                        src={post.imagePath ?? ''}
+                        alt="Foto enviada ao mural"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+
+              {/* Row 2 - scrolls right (reverse) */}
+              <div className="overflow-hidden rounded-3xl">
+                <div className="photo-marquee-reverse flex w-max gap-4">
+                  {[...carouselItems].reverse().map((post, index) => (
+                    <div
+                      key={`row2-${post.id}-${post.createdAt}-${index}`}
+                      className="h-[38vh] w-[38vh] shrink-0 overflow-hidden rounded-2xl shadow-lg"
+                    >
+                      <img
+                        src={post.imagePath ?? ''}
+                        alt="Foto enviada ao mural"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
           )}
         </div>
       </section>
