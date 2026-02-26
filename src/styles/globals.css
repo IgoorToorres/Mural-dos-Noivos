@@ -249,6 +249,26 @@
     box-shadow: 0 0 0 3px rgba(122, 138, 86, 0.25);
     border-color: var(--color-border-brand);
   }
+
+  @keyframes photo-marquee-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .photo-marquee {
+    position: relative;
+  }
+
+  .photo-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: photo-marquee-scroll 32s linear infinite;
+    will-change: transform;
+  }
 }
 
 /* Toast Error Styles (mantive seu padrão) */
