@@ -10,7 +10,7 @@
     "format": "prettier --check .",
     "validate:typecheck": "tsc --noEmit --skipLibCheck",
     "postinstall": "prisma generate",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build"
+    "vercel-build": "prisma generate && next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
