@@ -8,11 +8,14 @@
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --check .",
-    "validate:typecheck": "tsc --noEmit --skipLibCheck"
+    "validate:typecheck": "tsc --noEmit --skipLibCheck",
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
     "@prisma/adapter-pg": "^7.4.1",
+    "@prisma/client": "^7.4.1",
     "@supabase/supabase-js": "^2.97.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -32,7 +35,6 @@
     "zod": "4.1.0"
   },
   "devDependencies": {
-    "@prisma/client": "^7.4.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/pg": "^8.16.0",
