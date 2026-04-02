@@ -1,9 +1,18 @@
 import { getPosts } from '@/lib/posts';
+import MuralClient from './mural-client';
+import QRCode from 'qrcode';
 
 export default async function Home() {
   const posts = await getPosts();
-  const photos = posts.filter((post) => post.imagePath);
-  const carouselItems = [...photos, ...photos];
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'http://localhost:3000');
+  const qrDataUrl = await QRCode.toDataURL(`${baseUrl}/formulario`, {
+    width: 256,
+    margin: 1,
+  });
 
   return (
     <main className="relative h-dvh overflow-hidden bg-background">
@@ -41,7 +50,7 @@ export default async function Home() {
 
           <div className="flex items-center gap-4 rounded-2xl bg-accent-cream/80 px-6 py-3 shadow-lg backdrop-blur-sm">
             <img
-              src={'/download.png'}
+              src={qrDataUrl}
               alt="QR Code"
               className="h-24 w-24 rounded-lg object-cover"
             />
@@ -51,52 +60,8 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* Photo Grid - main focus */}
-        <div className="flex flex-1 flex-col justify-center gap-4 overflow-hidden pb-4">
-          {photos.length === 0 ? (
-            <div className="rounded-2xl border-2 border-dashed border-border-secondary bg-background-tertiary p-12 text-center text-base text-content-secondary">
-              As primeiras fotos aparecerão aqui assim que forem enviadas.
-            </div>
-          ) : (
-            <>
-              {/* Row 1 - scrolls left */}
-              <div className="overflow-hidden rounded-3xl">
-                <div className="photo-marquee flex w-max gap-4">
-                  {carouselItems.map((post, index) => (
-                    <div
-                      key={`row1-${post.id}-${post.createdAt}-${index}`}
-                      className="h-[38vh] w-[38vh] shrink-0 overflow-hidden rounded-2xl shadow-lg"
-                    >
-                      <img
-                        src={post.imagePath ?? ''}
-                        alt="Foto enviada ao mural"
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Row 2 - scrolls right (reverse) */}
-              <div className="overflow-hidden rounded-3xl">
-                <div className="photo-marquee-reverse flex w-max gap-4">
-                  {[...carouselItems].reverse().map((post, index) => (
-                    <div
-                      key={`row2-${post.id}-${post.createdAt}-${index}`}
-                      className="h-[38vh] w-[38vh] shrink-0 overflow-hidden rounded-2xl shadow-lg"
-                    >
-                      <img
-                        src={post.imagePath ?? ''}
-                        alt="Foto enviada ao mural"
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
-        </div>
+        {/* Photo Grid - main focus (auto-refresh) */}
+        <MuralClient initialPosts={posts} />
       </section>
     </main>
   );
