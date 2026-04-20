@@ -180,9 +180,7 @@ export const PostForm = () => {
 
               {/* AÇÃO */}
               <div className="flex flex-col gap-3">
-                <p className="text-paragraph-small text-content-tertiary">
-                  Ao enviar, você autoriza o uso da foto no mural do casamento.
-                </p>
+                
 
                 <Button
                   type="submit"
